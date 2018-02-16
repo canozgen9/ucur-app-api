@@ -1,0 +1,27 @@
+{
+  "name": "ucur-app-api",
+  "version": "1.0.0",
+  "description": "A backend for Ucur Application that uses Node.js, Socket.io, Express.js, MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canozgen9/ucur-app-api.git"
+  },
+  "keywords": [
+    "ucur",
+    "api",
+    "mongodb",
+    "nodejs",
+    "expressjs",
+    "socketio"
+  ],
+  "author": "Vertex",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/canozgen9/ucur-app-api/issues"
+  },
+  "homepage": "https://github.com/canozgen9/ucur-app-api#readme"
+}
