@@ -126,29 +126,31 @@ protectedRoutes.post('/user/profile', function (req, res) {
 protectedRoutes.post('/transport/offers', function (req, res) {
 
   let claimRequestID = req.body ._id;
+  let claimRequest;
 
-  TransportOfferModel.find({"claimRequest": claimRequestID}).populate('claimRequest').populate('owner').exec(function (err, transportOfferModel) {
-    if (err) {
-      res.json({success: false, message: 'Something went wrong: ' + err});
-    }
-    else {
-      return res.json({success: true, transportOfferModels: transportOfferModel});
-    }
-  });
+  ClaimRequestModel.findOne({'_id': claimRequestID}).populate('category').populate('owner').exec()
+  .then(function(data){
+    claimRequest = data;
+    return TransportOfferModel.find({"claimRequest": claimRequestID}).populate('claimRequest').populate('owner').exec()
+  })
+  .then(function (data) {
+    return res.json({success: true, claimRequest, transportOfferModels: data});
+  })
 });
 
 protectedRoutes.post('/claim/offers', function (req, res) {
 
   let transportRequestID = req.body ._id;
+  let transportRequest;
 
-  ClaimOfferModel.find({"transportRequest": transportRequestID}).populate('transportRequest').populate('owner').exec(function (err, claimOfferModel) {
-    if (err) {
-      res.json({success: false, message: 'Something went wrong: ' + err});
-    }
-    else {
-      return res.json({success: true, claimOfferModels: claimOfferModel});
-    }
-  });
+  TransportRequestModel.findOne({'_id': transportRequestID}).populate('category').populate('owner').exec()
+  .then(function(data){
+    transportRequest = data;
+    return ClaimOfferModel.find({"transportRequest": transportRequestID}).populate('claimRequest').populate('owner').exec()
+  })
+  .then(function (data) {
+    return res.json({success: true, transportRequest, claimOfferModels: data});
+  })
 });
 
 protectedRoutes.post('/update', function (req, res) {
