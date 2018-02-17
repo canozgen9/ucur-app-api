@@ -1,4 +1,4 @@
-import Model from "ModelConfig";
+import { ModelConfig } from "./ModelConfig";
 
 let mongoose = require('mongoose');
 
@@ -6,12 +6,12 @@ let mongoose = require('mongoose');
 let userSchema = mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Model.User
+        ref: ModelConfig.User
     },
     category: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: Model.Category
+            ref: ModelConfig.Category
         }
     ],
     maxWeightCapacity: {
@@ -50,5 +50,5 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let TransportRequestModel = module.exports = mongoose.model(Model.TransportRequest, userSchema);
+let TransportRequestModel = module.exports = mongoose.model(ModelConfig.TransportRequest, userSchema);
 

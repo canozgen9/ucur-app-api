@@ -1,4 +1,4 @@
-import Model from "ModelConfig";
+import { ModelConfig } from "./ModelConfig";
 
 let mongoose = require('mongoose');
 
@@ -6,12 +6,12 @@ let mongoose = require('mongoose');
 let userSchema = mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Model.User
+        ref: ModelConfig.User
     },
     category: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: Model.Category
+            ref: ModelConfig.Category
         }
     ],
     weight: {
@@ -36,5 +36,5 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let ClaimRequestModel = module.exports = mongoose.model(Model.ClaimRequest, userSchema);
+let ClaimRequestModel = module.exports = mongoose.model(ModelConfig.ClaimRequest, userSchema);
 

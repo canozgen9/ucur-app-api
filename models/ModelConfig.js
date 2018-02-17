@@ -1,4 +1,4 @@
-export const Model = {
+export const ModelConfig = {
     User: "UserModelModel",
     TransportRequest: "TransportRequestModel",
     ClaimRequest: "ClaimRequestModel",

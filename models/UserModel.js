@@ -1,4 +1,4 @@
-import Model from "ModelConfig";
+import { ModelConfig } from "./ModelConfig";
 
 let mongoose = require('mongoose');
 
@@ -22,5 +22,5 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let UserModel = module.exports = mongoose.model(Model.User, userSchema);
+let UserModel = module.exports = mongoose.model(ModelConfig.User, userSchema);
 

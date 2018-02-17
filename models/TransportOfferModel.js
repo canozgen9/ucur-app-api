@@ -1,4 +1,4 @@
-import Model from "ModelConfig";
+import { ModelConfig } from "./ModelConfig";
 
 let mongoose = require('mongoose');
 
@@ -6,11 +6,11 @@ let mongoose = require('mongoose');
 let userSchema = mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Model.User
+        ref: ModelConfig.User
     },
     claimRequest: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Model.ClaimRequest
+        ref: ModelConfig.ClaimRequest
     },
     startDate: {
         type: Date,
@@ -40,5 +40,5 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let TransportOfferModel = module.exports = mongoose.model(Model.TransportOffer, userSchema);
+let TransportOfferModel = module.exports = mongoose.model(ModelConfig.TransportOffer, userSchema);
 
