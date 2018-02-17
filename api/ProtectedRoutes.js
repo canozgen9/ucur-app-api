@@ -2,6 +2,9 @@ import {RouteConfig} from "./RouteConfig";
 import express from "express";
 import jwt from "jsonwebtoken";
 import TransportRequestModel from "./../models/TransportRequestModel"
+import ClaimRequestModel from "./../models/ClaimRequestModel"
+import TransportOfferModel from "./../models/TransportOfferModel"
+import ClaimOfferModel from "./../models/ClaimOfferModel"
 
 let protectedRoutes = express.Router();
 
@@ -24,6 +27,24 @@ protectedRoutes.use(function (req, res, next) {
     }
 });
 
+protectedRoutes.post('/check', function (req, res) {
+  let token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if (token) {
+      jwt.verify(token, RouteConfig.AppSecret, function (err, decoded) {
+          if (err) {
+              return res.json({success: false, message: 'Failed to authenticate token.'});
+          } else {
+              return res.json({success: true, user: decoded.user });
+          }
+      });
+  } else {
+      return res.status(403).send({
+          success: false,
+          message: 'No token provided.'
+      });
+  }
+});
+
 protectedRoutes.post('/transport/request/create', function (req, res) {
   let transportRequestModel = req.body;
   transportRequestModel.owner = req.decoded.user._id;
@@ -35,6 +56,43 @@ protectedRoutes.post('/transport/request/create', function (req, res) {
           }
       });
 });
+
+protectedRoutes.post('/transport/offer/create', function (req, res) {
+  let transportOfferModel = req.body;
+  transportOfferModel.owner = req.decoded.user._id;
+  TransportOfferModel.create(transportOfferModel, function(err, transportOfferModel) {
+          if (err){
+             return res.json({success: false, message: 'Something went wrong: ' + err});
+          } else {
+            return res.json({ success: true, transportOfferModel: transportOfferModel });
+          }
+      });
+});
+
+protectedRoutes.post('/claim/request/create', function (req, res) {
+  let claimRequestModel = req.body;
+  claimRequestModel.owner = req.decoded.user._id;
+  ClaimRequestModel.create(claimRequestModel, function(err, claimRequestModel) {
+          if (err){
+             return res.json({success: false, message: 'Something went wrong: ' + err});
+          } else {
+            return res.json({ success: true, claimRequestModel: claimRequestModel });
+          }
+      });
+});
+
+protectedRoutes.post('/claim/offer/create', function (req, res) {
+  let claimOfferModel = req.body;
+  claimOfferModel.owner = req.decoded.user._id;
+  ClaimOfferModel.create(claimOfferModel, function(err, claimOfferModel) {
+          if (err){
+             return res.json({success: false, message: 'Something went wrong: ' + err});
+          } else {
+            return res.json({ success: true, claimOfferModel: claimOfferModel });
+          }
+      });
+});
+
 
 protectedRoutes.get('/protected', function (req, res) {
     res.json({success: true, "user": req.decoded.user});

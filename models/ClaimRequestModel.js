@@ -14,6 +14,10 @@ let userSchema = mongoose.Schema({
             ref: ModelConfig.Category
         }
     ],
+    product: {
+        type: String,
+        required: true
+    },
     weight: {
         type: Number,
         required: true
@@ -28,7 +32,7 @@ let userSchema = mongoose.Schema({
     },
     status: {
         type: Number,
-        required: true
+        default: 0
     },
     created_at: {
         type: Date,

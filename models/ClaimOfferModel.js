@@ -34,7 +34,7 @@ let userSchema = mongoose.Schema({
     },
     status: {
         type: Number,
-        required: true
+        default: 0
     },
     created_at: {
         type: Date,

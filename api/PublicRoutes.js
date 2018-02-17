@@ -4,6 +4,9 @@ import {RouteConfig} from "./RouteConfig";
 import UserModel from "./../models/UserModel";
 import CategoryModel from "./../models/CategoryModel";
 import TransportRequestModel from "./../models/TransportRequestModel";
+import ClaimRequestModel from "./../models/ClaimRequestModel"
+import TransportOfferModel from "./../models/TransportOfferModel"
+import ClaimOfferModel from "./../models/ClaimOfferModel"
 
 let publicRoutes = express.Router();
 
@@ -70,9 +73,43 @@ publicRoutes.get('/transport/requests', function (req, res) {
       res.json({success: false, message: 'Something went wrong: ' + err});
     }
     else {
-      return res.json({success: true, transportRequestModel: transportRequestModel});
+      return res.json({success: true, transportRequestModels: transportRequestModel});
     }
   });
 });
+
+publicRoutes.get('/transport/offers', function (req, res) {
+  TransportOfferModel.find({}).populate('claimRequest').populate('owner').exec(function (err, transportOfferModel) {
+    if (err) {
+      res.json({success: false, message: 'Something went wrong: ' + err});
+    }
+    else {
+      return res.json({success: true, transportOfferModels: transportOfferModel});
+    }
+  });
+});
+
+publicRoutes.get('/claim/requests', function (req, res) {
+  ClaimRequestModel.find({}).populate('category').populate('owner').exec(function (err, calimRequestModel) {
+    if (err) {
+      res.json({success: false, message: 'Something went wrong: ' + err});
+    }
+    else {
+      return res.json({success: true, calimRequestModels: calimRequestModel});
+    }
+  });
+});
+
+publicRoutes.get('/claim/offers', function (req, res) {
+  ClaimOfferModel.find({}).populate('transportRequest').populate('owner').exec(function (err, calimOfferModel) {
+    if (err) {
+      res.json({success: false, message: 'Something went wrong: ' + err});
+    }
+    else {
+      return res.json({success: true, calimOfferModels: calimOfferModel});
+    }
+  });
+});
+
 
 export default publicRoutes;
