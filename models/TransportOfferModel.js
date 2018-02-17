@@ -40,5 +40,4 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let TransportOfferModel = module.exports = mongoose.model(ModelConfig.TransportOffer, userSchema);
-
+let TransportOfferModel = module.exports = mongoose.model(ModelConfig.TransportOffer, userSchema, 'transportOffers');

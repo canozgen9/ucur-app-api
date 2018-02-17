@@ -11,9 +11,15 @@ let userSchema = mongoose.Schema({
     category: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: ModelConfig.Category
+            ref: ModelConfig.Category,
+            required: true
+
         }
     ],
+    country: {
+      type: String,
+      required: true
+    },
     maxWeightCapacity: {
         type: Number,
         required: true
@@ -28,7 +34,7 @@ let userSchema = mongoose.Schema({
     },
     status: {
         type: Number,
-        required: true
+        default: 0
     },
     startDate: {
         type: Date,
@@ -50,5 +56,4 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let TransportRequestModel = module.exports = mongoose.model(ModelConfig.TransportRequest, userSchema);
-
+let TransportRequestModel = module.exports = mongoose.model(ModelConfig.TransportRequest, userSchema,'transportRequests');

@@ -12,6 +12,10 @@ let userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: ModelConfig.TransportRequest
     },
+    country: {
+      type: String,
+      required: true
+    },
     product: {
         type: String,
         required: true
@@ -38,5 +42,4 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let ClaimOfferModel = module.exports = mongoose.model(ModelConfig.ClaimOffer, userSchema);
-
+let ClaimOfferModel = module.exports = mongoose.model(ModelConfig.ClaimOffer, userSchema, 'claimOffers');

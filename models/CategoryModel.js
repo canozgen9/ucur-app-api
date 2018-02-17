@@ -14,5 +14,4 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let CategoryModel = module.exports = mongoose.model(ModelConfig.Category, userSchema);
-
+let CategoryModel = module.exports = mongoose.model(ModelConfig.Category, userSchema, 'categories');

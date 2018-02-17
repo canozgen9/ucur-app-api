@@ -36,5 +36,4 @@ let userSchema = mongoose.Schema({
     }
 });
 
-let ClaimRequestModel = module.exports = mongoose.model(ModelConfig.ClaimRequest, userSchema);
-
+let ClaimRequestModel = module.exports = mongoose.model(ModelConfig.ClaimRequest, userSchema, 'claimRequests');
