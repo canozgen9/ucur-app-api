@@ -90,23 +90,23 @@ publicRoutes.get('/transport/offers', function (req, res) {
 });
 
 publicRoutes.get('/claim/requests', function (req, res) {
-  ClaimRequestModel.find({}).populate('category').populate('owner').exec(function (err, calimRequestModel) {
+  ClaimRequestModel.find({}).populate('category').populate('owner').exec(function (err, claimRequestModel) {
     if (err) {
       res.json({success: false, message: 'Something went wrong: ' + err});
     }
     else {
-      return res.json({success: true, calimRequestModels: calimRequestModel});
+      return res.json({success: true, claimRequestModels: claimRequestModel});
     }
   });
 });
 
 publicRoutes.get('/claim/offers', function (req, res) {
-  ClaimOfferModel.find({}).populate('transportRequest').populate('owner').exec(function (err, calimOfferModel) {
+  ClaimOfferModel.find({}).populate('transportRequest').populate('owner').exec(function (err, claimOfferModel) {
     if (err) {
       res.json({success: false, message: 'Something went wrong: ' + err});
     }
     else {
-      return res.json({success: true, calimOfferModels: calimOfferModel});
+      return res.json({success: true, claimOfferModels: claimOfferModel});
     }
   });
 });

@@ -5,6 +5,7 @@ import TransportRequestModel from "./../models/TransportRequestModel"
 import ClaimRequestModel from "./../models/ClaimRequestModel"
 import TransportOfferModel from "./../models/TransportOfferModel"
 import ClaimOfferModel from "./../models/ClaimOfferModel"
+import UserModel from "./../models/UserModel"
 
 let protectedRoutes = express.Router();
 
@@ -91,6 +92,35 @@ protectedRoutes.post('/claim/offer/create', function (req, res) {
             return res.json({ success: true, claimOfferModel: claimOfferModel });
           }
       });
+});
+
+protectedRoutes.post('/user/profile', function (req, res) {
+  let userID = req.body._id;
+  let profileInformatin = {};
+  let userInformation;
+
+    UserModel.findOne({"_id": userID,}).exec()
+      .then(function (data) {
+        userInformation = data;
+        return TransportRequestModel.find({'owner': userID }).populate('category').exec()
+    })
+      .then(function (data) {
+        profileInformatin.transportRequest = data;
+        return TransportOfferModel.find({'owner': userID }).populate('claimRequest').exec()
+      })
+      .then(function (data) {
+        profileInformatin.transportOffer = data;
+        return ClaimRequestModel.find({'owner': userID }).populate('category').exec()
+      })
+      .then(function (data) {
+        profileInformatin.claimRequest = data;
+        return ClaimOfferModel.find({'owner': userID }).populate('transportRequest').exec()
+      })
+      .then(function (data) {
+        profileInformatin.claimOffer = data;
+        return res.json({success: true, userInformation, "userProfile": profileInformatin});
+      })
+
 });
 
 
