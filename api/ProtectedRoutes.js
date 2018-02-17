@@ -151,10 +151,75 @@ protectedRoutes.post('/claim/offers', function (req, res) {
   });
 });
 
+protectedRoutes.post('/update', function (req, res) {
+    let type = req.body.type;
+    let _id = req.body._id;
+    let status = req.body.status;  //0 for default, 1 for accepted, 2 for negative
+
+    switch(type) {
+          //Transpor Request
+          case 0:
+
+            TransportRequestModel.update({"_id": _id}, { $set: { status: status }}, function (err, info) {
+                if (err) {
+                  return res.json({success: false, message: 'Something went wrong: ' + err});
+                }
+                else {
+                  return res.json({success: true,info: info});
+                }
+              });
+
+              break;
+
+          //Transport Offer
+          case 1:
+
+            TransportOfferModel.update({"_id": _id}, { $set: { status: status }}, function (err, info) {
+              if (err) {
+                return res.json({success: false, message: 'Something went wrong: ' + err});
+              }
+              else {
+                return res.json({success: true, info: info});
+              }
+            });
+
+              break;
+
+          //Claim Request
+          case 2:
+
+            ClaimRequestModel.update({"_id": _id}, { $set: { status: status }}, function (err, info) {
+              if (err) {
+                return res.json({success: false, message: 'Something went wrong: ' + err});
+              }
+              else {
+                return res.json({success: true, info: info});
+              }
+            });
+
+
+              break;
+
+          //Claim Offer
+          case 3:
+
+          ClaimOfferModel.update({"_id": _id}, { $set: { status: status }}, function (err, claimOfferModel) {
+            if (err) {
+              return res.json({success: false, message: 'Something went wrong: ' + err});
+            }
+            else {
+              return res.json({success: true, info: info});
+            }
+          });
+
+            break;
+          default:
+            res.json({success: false, "Error" : "Not a valid request!" });
+      }
+});
+
 protectedRoutes.get('/protected', function (req, res) {
     res.json({success: true, "user": req.decoded.user});
 });
-
-
 
 export default protectedRoutes;
