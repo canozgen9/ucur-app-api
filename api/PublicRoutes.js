@@ -49,7 +49,6 @@ publicRoutes.post('/signin', function (req, res) {
 });
 
 publicRoutes.get('/public', function (req, res) {
-    res.json({success: true});
 });
 
 export default publicRoutes;
