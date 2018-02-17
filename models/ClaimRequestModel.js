@@ -34,6 +34,10 @@ let userSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    city: {
+        type: String,
+        required: true
+    },
     created_at: {
         type: Date,
         default: Date.now

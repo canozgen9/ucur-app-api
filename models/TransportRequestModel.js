@@ -20,6 +20,10 @@ let userSchema = mongoose.Schema({
       type: String,
       required: true
     },
+    city: {
+        type: String,
+        required: true
+    },
     maxWeightCapacity: {
         type: Number,
         required: true
@@ -47,6 +51,10 @@ let userSchema = mongoose.Schema({
         required: true
     },
     commission: {
+        type: String,
+        required: true
+    },
+    coverArt: {
         type: String,
         required: true
     },
