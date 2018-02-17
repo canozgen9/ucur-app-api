@@ -102,19 +102,19 @@ protectedRoutes.post('/user/profile', function (req, res) {
     UserModel.findOne({"_id": userID,}).exec()
       .then(function (data) {
         userInformation = data;
-        return TransportRequestModel.find({'owner': userID }).populate('category').exec()
+        return TransportRequestModel.find({'owner': userID }).populate('category').populate('owner').exec()
     })
       .then(function (data) {
         profileInformatin.transportRequest = data;
-        return TransportOfferModel.find({'owner': userID }).populate('claimRequest').exec()
+        return TransportOfferModel.find({'owner': userID }).populate('claimRequest').populate('owner').exec()
       })
       .then(function (data) {
         profileInformatin.transportOffer = data;
-        return ClaimRequestModel.find({'owner': userID }).populate('category').exec()
+        return ClaimRequestModel.find({'owner': userID }).populate('category').populate('owner').exec()
       })
       .then(function (data) {
         profileInformatin.claimRequest = data;
-        return ClaimOfferModel.find({'owner': userID }).populate('transportRequest').exec()
+        return ClaimOfferModel.find({'owner': userID }).populate('transportRequest').populate('owner').exec()
       })
       .then(function (data) {
         profileInformatin.claimOffer = data;
