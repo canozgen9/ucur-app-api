@@ -96,7 +96,7 @@ protectedRoutes.post('/claim/offer/create', function (req, res) {
 
 protectedRoutes.post('/user/profile', function (req, res) {
   let userID = req.body._id;
-  let profileInformatin = {};
+  let profileInformation = {};
   let userInformation;
 
     UserModel.findOne({"_id": userID,}).exec()
@@ -105,20 +105,20 @@ protectedRoutes.post('/user/profile', function (req, res) {
         return TransportRequestModel.find({'owner': userID }).populate('category').populate('owner').exec()
     })
       .then(function (data) {
-        profileInformatin.transportRequest = data;
+        profileInformation.transportRequest = data;
         return TransportOfferModel.find({'owner': userID }).populate('claimRequest').populate('owner').exec()
       })
       .then(function (data) {
-        profileInformatin.transportOffer = data;
+        profileInformation.transportOffer = data;
         return ClaimRequestModel.find({'owner': userID }).populate('category').populate('owner').exec()
       })
       .then(function (data) {
-        profileInformatin.claimRequest = data;
+        profileInformation.claimRequest = data;
         return ClaimOfferModel.find({'owner': userID }).populate('transportRequest').populate('owner').exec()
       })
       .then(function (data) {
-        profileInformatin.claimOffer = data;
-        return res.json({success: true, userInformation, "userProfile": profileInformatin});
+        profileInformation.claimOffer = data;
+        return res.json({success: true, userInformation, "userProfile": profileInformation});
       })
 
 });
