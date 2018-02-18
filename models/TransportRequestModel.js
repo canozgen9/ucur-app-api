@@ -13,14 +13,13 @@ let userSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: ModelConfig.Category,
             required: true
-
         }
     ],
-    country: {
+    cityToDeliver: {
       type: String,
       required: true
     },
-    city: {
+    cityToTravel: {
         type: String,
         required: true
     },
@@ -51,10 +50,6 @@ let userSchema = mongoose.Schema({
         required: true
     },
     commission: {
-        type: String,
-        required: true
-    },
-    coverArt: {
         type: String,
         required: true
     },
