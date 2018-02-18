@@ -6,6 +6,8 @@ import ClaimRequestModel from "./../models/ClaimRequestModel"
 import TransportOfferModel from "./../models/TransportOfferModel"
 import ClaimOfferModel from "./../models/ClaimOfferModel"
 import UserModel from "./../models/UserModel"
+import OrderModel from "./../models/OrderModel"
+import ProgressModel from "./../models/ProgressModel"
 
 let protectedRoutes = express.Router();
 
@@ -205,7 +207,7 @@ protectedRoutes.post('/update', function (req, res) {
           //Claim Offer
           case 3:
 
-          ClaimOfferModel.update({"_id": _id}, { $set: { status: status }}, function (err, claimOfferModel) {
+          ClaimOfferModel.update({"_id": _id}, { $set: { status: status }}, function (err, info) {
             if (err) {
               return res.json({success: false, message: 'Something went wrong: ' + err});
             }
@@ -218,6 +220,60 @@ protectedRoutes.post('/update', function (req, res) {
           default:
             res.json({success: false, "Error" : "Not a valid request!" });
       }
+});
+
+protectedRoutes.post('/order/create', function (req, res) {
+
+  let orderModel = req.body;
+  OrderModel.create(orderModel, function(err, orderModel) {
+          if (err){
+             return res.json({success: false, message: 'Something went wrong: ' + err});
+          } else {
+            TransportRequestModel.update({"_id": orderModel.request}, { $set: { status: 1 }}, function (err, info) {
+                if (err) {
+                  return res.json({success: false, message: 'Something went wrong: ' + err});
+                }
+                else {
+                  ClaimOfferModel.update({"_id": orderModel.claimOffer}, { $set: { status: 1 }}, function (err, info) {
+                    if (err) {
+                      return res.json({success: false, message: 'Something went wrong: ' + err});
+                    }
+                    else {
+                      return res.json({ success: true, orderModel: orderModel, info: "Status updated."});
+                    }
+                  });
+                }
+              });
+          }
+      });
+});
+
+protectedRoutes.post('/order/progress', function (req, res) {
+
+  let orderID = req.body._id;
+  let progressModel = req.body.progress;
+
+  ProgressModel.create(progressModel, function (err, progressModel) {
+    if (err){
+       return res.json({success: false, message: 'Something went wrong: ' + err});
+    } else {
+      OrderModel.findOneAndUpdate({ _id: orderID }, {$push: { progress : progressModel._id }}, function (err, orderModel) {
+        return res.json({ success: true, orderModel: orderModel });
+      });
+    }
+  });
+});
+
+protectedRoutes.post('/order', function (req, res) {
+
+  let userID = req.body._id;
+  OrderModel.find({ $or:[ {'buyer':userID}, {'requester':userID}]}).populate('orderModel').populate('buyer').populate('requester').populate('progress').exec( function (err, orderModel) {
+    if (err){
+       return res.json({success: false, message: 'Something went wrong: ' + err});
+    } else {
+        return res.json({ success: true, orderModel: orderModel });
+    }
+  })
 });
 
 protectedRoutes.get('/protected', function (req, res) {

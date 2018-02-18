@@ -4,5 +4,7 @@ export const ModelConfig = {
     ClaimRequest: "ClaimRequestModel",
     TransportOffer: "TransportOfferModel",
     ClaimOffer: "ClaimOfferModel",
-    Category: "CategoryModel"
+    Category: "CategoryModel",
+    Order: "Order",
+    Progress: "Progres"
 };
