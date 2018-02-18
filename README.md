@@ -7,7 +7,7 @@ Vertex
 
 2 Numaralı Önerilmiş Proje
 
-Detaylar yakında...
+URL: http://23.251.128.252:3000/api
 
 
 # @POST /api/create-user
