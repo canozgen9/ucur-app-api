@@ -8,6 +8,8 @@ import ClaimOfferModel from "./../models/ClaimOfferModel"
 import UserModel from "./../models/UserModel"
 import OrderModel from "./../models/OrderModel"
 import ProgressModel from "./../models/ProgressModel"
+import NotificationModel from "./../models/NotificationModel"
+
 
 let protectedRoutes = express.Router();
 
@@ -276,8 +278,52 @@ protectedRoutes.post('/order', function (req, res) {
   })
 });
 
+
+
+protectedRoutes.post('/notification', function (req, res) {
+  let userID = req.decoded.user._id;
+  NotificationModel.find({'user': userID }).populate('user').exec(function (err, notificationModel) {
+    if (err) {
+      return res.json({success: false, message: 'Something went wrong: ' + err});
+    }
+    else {
+      return res.json({ success: true, notificationModel: notificationModel });
+    }
+  });
+});
+
+protectedRoutes.post('/notification/seen', function (req, res) {
+  let userID = req.decoded.user._id;
+  NotificationModel.update({"user": userID}, { $set: { seen: 1 }}, function (err, info) {
+      if (err) {
+        return res.json({success: false, message: 'Something went wrong: ' + err});
+      }
+      else {
+        return res.json({success: true,info: info});
+      }
+    });
+
+
+});
+
 protectedRoutes.get('/protected', function (req, res) {
     res.json({success: true, "user": req.decoded.user});
 });
+
+let notify = function(userID, msg, type){
+  let notificationModel = {
+    "user": userID,
+    "type": type,
+    "message": msg
+  }
+  NotificationModel.create(notificationModel, function (err, notificationModel) {
+    if (err) {
+      return res.json({success: false, message: 'Something went wrong: ' + err});
+    }
+    else {
+      return res.json({ success: true, notificationModel: notificationModel });
+    }
+  })
+}
 
 export default protectedRoutes;

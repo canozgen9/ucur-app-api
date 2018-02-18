@@ -6,5 +6,6 @@ export const ModelConfig = {
     ClaimOffer: "ClaimOfferModel",
     Category: "CategoryModel",
     Order: "Order",
-    Progress: "Progres"
+    Progress: "Progres",
+    Notification: "NotificationModel"
 };
