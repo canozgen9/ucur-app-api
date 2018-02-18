@@ -68,7 +68,7 @@ publicRoutes.get('/categories', function (req, res) {
 });
 
 publicRoutes.get('/transport/requests', function (req, res) {
-  TransportRequestModel.find({}).populate('category').populate('owner').exec(function (err, transportRequestModel) {
+  TransportRequestModel.find({}).sort({'created_at': 'desc'}).populate('category').populate('owner').exec(function (err, transportRequestModel) {
     if (err) {
       res.json({success: false, message: 'Something went wrong: ' + err});
     }
@@ -79,7 +79,7 @@ publicRoutes.get('/transport/requests', function (req, res) {
 });
 
 publicRoutes.get('/transport/offers', function (req, res) {
-  TransportOfferModel.find({}).populate('claimRequest').populate('owner').exec(function (err, transportOfferModel) {
+  TransportOfferModel.find({}).sort({'created_at': 'desc'}).populate('claimRequest').populate('owner').exec(function (err, transportOfferModel) {
     if (err) {
       res.json({success: false, message: 'Something went wrong: ' + err});
     }
@@ -90,7 +90,7 @@ publicRoutes.get('/transport/offers', function (req, res) {
 });
 
 publicRoutes.get('/claim/requests', function (req, res) {
-  ClaimRequestModel.find({}).populate('category').populate('owner').exec(function (err, claimRequestModel) {
+  ClaimRequestModel.find({}).sort({'created_at': 'desc'}).populate('category').populate('owner').exec(function (err, claimRequestModel) {
     if (err) {
       res.json({success: false, message: 'Something went wrong: ' + err});
     }
@@ -101,7 +101,7 @@ publicRoutes.get('/claim/requests', function (req, res) {
 });
 
 publicRoutes.get('/claim/offers', function (req, res) {
-  ClaimOfferModel.find({}).populate('transportRequest').populate('owner').exec(function (err, claimOfferModel) {
+  ClaimOfferModel.find({}).sort({'created_at': 'desc'}).populate('transportRequest').populate('owner').exec(function (err, claimOfferModel) {
     if (err) {
       res.json({success: false, message: 'Something went wrong: ' + err});
     }

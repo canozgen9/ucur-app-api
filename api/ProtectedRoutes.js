@@ -277,7 +277,7 @@ protectedRoutes.post('/order/progress/create', function (req, res) {
 protectedRoutes.post('/order', function (req, res) {
 
   let userID = req.body._id;
-  OrderModel.find({ $or:[ {'buyer':userID}, {'requester':userID}]}).populate('orderModel').populate('buyer').populate('requester').populate('progress').exec( function (err, orderModel) {
+  OrderModel.find({ $or:[ {'buyer':userID}, {'requester':userID}]}).sort({'created_at': 'desc'}).populate('orderModel').populate('buyer').populate('requester').populate('progress').exec( function (err, orderModel) {
     if (err){
        return res.json({success: false, message: 'Something went wrong: ' + err});
     } else {
@@ -310,8 +310,6 @@ protectedRoutes.post('/notification/seen', function (req, res) {
         return res.json({success: true,info: info});
       }
     });
-
-
 });
 
 protectedRoutes.get('/protected', function (req, res) {
