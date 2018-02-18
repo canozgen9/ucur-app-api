@@ -231,7 +231,7 @@ protectedRoutes.post('/order/create', function (req, res) {
           if (err){
              return res.json({success: false, message: 'Something went wrong: ' + err});
           } else {
-            TransportRequestModel.update({"_id": orderModel.request}, { $set: { status: 1 }}, function (err, info) {
+            TransportRequestModel.update({"_id": orderModel.transportRequest}, { $set: { status: 1 }}, function (err, info) {
                 if (err) {
                   return res.json({success: false, message: 'Something went wrong: ' + err});
                 }
@@ -250,7 +250,7 @@ protectedRoutes.post('/order/create', function (req, res) {
       });
 });
 
-protectedRoutes.post('/order/progress', function (req, res) {
+protectedRoutes.post('/order/progress/create', function (req, res) {
 
   let orderID = req.body._id;
   let progressModel = req.body.progress;
