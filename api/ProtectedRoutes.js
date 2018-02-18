@@ -253,7 +253,15 @@ protectedRoutes.post('/order/create', function (req, res) {
 protectedRoutes.post('/order/progress/create', function (req, res) {
 
   let orderID = req.body._id;
-  let progressModel = req.body.progress;
+  let plat = req.body.plat;
+  let plong = req.body.plong;
+  let pmessage = req.body.pmessage;
+
+  let progressModel = {
+    message: pmessage,
+    lat: plat,
+    lang: plong
+  }
 
   ProgressModel.create(progressModel, function (err, progressModel) {
     if (err){
